@@ -66,4 +66,19 @@ describe('tbi-resources-BE routes', () => {
       resource3
     ]);
   });
+
+  it('gets one resource by id', async () => {
+    const resource = await Resources.createResource({
+      title: 'Brain Injury Alliance',
+      category: 'Advocacy',
+      about:
+        'The mission of the Brain Injury Alliance is to raise awareness and enhance the quality of life for all people affected by brain injury. State chapter of BIA provide resource facilitation, education, outreach, events, case management, and many other resources for living with TBI.',
+      link: 'https://usbia.org/',
+      logo: 'https://usbia.org/wp-content/uploads/2015/10/USBIA-Logo.png',
+    });
+
+    const res = await request(app).get(`/api/v1/resources/${resource.id}`);
+
+    expect(res.body).toEqual(resource);
+  });
 });
