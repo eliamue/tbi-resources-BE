@@ -111,4 +111,21 @@ describe('tbi-resources-BE routes', () => {
       logo: 'https://www.braininjurymn.org/assets/graphics/mnbia-logo.gif',
     });
   });
+
+    it('deletes a specific existing resource', async () => {
+      const resource = await Resources.createResource({
+        title: 'Minnesota Brain Injury Alliance',
+        category: 'Advocacy',
+        about:
+          'The mission of the Brain Injury Alliance is to raise awareness and enhance the quality of life for all people affected by brain injury. Minnesota of BIA provide resource facilitation, education, outreach, events, case management, and many other resources for living with TBI.',
+        link: 'https://www.braininjurymn.org/',
+        logo: 'https://www.braininjurymn.org/assets/graphics/mnbia-logo.gif',
+      });
+
+      const res = await request(app).delete(`/api/v1/resources/${resource.id}`);
+
+      expect(res.body).toEqual({
+        message: `You have deleted ${resource.src_name}.`,
+      });
+    });
 });
