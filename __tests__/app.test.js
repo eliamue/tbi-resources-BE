@@ -81,4 +81,34 @@ describe('tbi-resources-BE routes', () => {
 
     expect(res.body).toEqual(resource);
   });
+
+  it('updates a resource', async () => {
+    const resource = await Resources.createResource({
+      title: 'Brain Injury Alliance',
+      category: 'Advocacy',
+      about:
+        'The mission of the Brain Injury Alliance is to raise awareness and enhance the quality of life for all people affected by brain injury. State chapter of BIA provide resource facilitation, education, outreach, events, case management, and many other resources for living with TBI.',
+      link: 'https://usbia.org/',
+      logo: 'https://usbia.org/wp-content/uploads/2015/10/USBIA-Logo.png',
+    });
+
+    const res = await request(app)
+      .put(`/api/v1/resources/${resource.id}`)
+      .send({
+        title: 'Minnesota Brain Injury Alliance',
+        category: 'Advocacy',
+        about:
+          'The mission of the Brain Injury Alliance is to raise awareness and enhance the quality of life for all people affected by brain injury. Minnesota of BIA provide resource facilitation, education, outreach, events, case management, and many other resources for living with TBI.',
+        link: 'https://www.braininjurymn.org/',
+        logo: 'https://www.braininjurymn.org/assets/graphics/mnbia-logo.gif',
+      });
+    expect(res.body).toEqual({
+      ...resource,
+      title: 'Minnesota Brain Injury Alliance',
+      about:
+        'The mission of the Brain Injury Alliance is to raise awareness and enhance the quality of life for all people affected by brain injury. Minnesota of BIA provide resource facilitation, education, outreach, events, case management, and many other resources for living with TBI.',
+      link: 'https://www.braininjurymn.org/',
+      logo: 'https://www.braininjurymn.org/assets/graphics/mnbia-logo.gif',
+    });
+  });
 });
