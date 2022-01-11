@@ -12,7 +12,7 @@ describe('tbi-resources-BE routes', () => {
   afterAll(() => {
     pool.end();
   });
-  it('creates a new resource', async () => {
+  it('Creates a new tbi resource', async () => {
     const resource = {
       title: 'Dark Reader',
       category: 'Accessibility',
